@@ -14,3 +14,10 @@ a {
 * {
   box-sizing: border-box;
 }
+
+canvas {
+    display: block;
+    background:hsl(233, 23%, 15%);
+    position: absolute;
+    z-index: -1;
+}
