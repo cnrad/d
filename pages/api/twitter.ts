@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         "https://cdn.syndication.twimg.com/widgets/followbutton/info.json?screen_names=notcnrad"
     ).then(res => res.json());
 
-    let followerCount = twitterInfo[0].followers_count;
+    console.log(twitterInfo[0]);
 
-    res.status(200).json({ followers: followerCount });
+    res.status(200).json({ followers: twitterInfo[0].followers_count });
 }
