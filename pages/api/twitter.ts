@@ -12,5 +12,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     let followerCount = twitterInfo[0].followers_count;
 
-    res.status(200).json({ followers: followerCount as string });
+    res.status(200).json({ followers: followerCount });
 }

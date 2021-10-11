@@ -5,15 +5,17 @@ import styled from "styled-components";
 
 export const getStaticProps = async function () {
     let twitter = await fetch("http://localhost:3005/api/twitter").then(res => res.json());
+    let github = await fetch("http://localhost:3005/api/github").then(res => res.json());
 
     return {
         props: {
             twitter,
+            github,
         },
     };
 };
 
-const Home: NextPage = ({ twitter }: any) => {
+const Home: NextPage = ({ twitter, github }: any) => {
     return (
         <Page>
             <SectionBox>
@@ -28,16 +30,16 @@ const Home: NextPage = ({ twitter }: any) => {
                 <SectionTitle>GITHUB</SectionTitle>
                 <SectionInfo>
                     Followers:
-                    <SectionStat color={"#2462AF"}>{twitter.followers}</SectionStat>
-                </SectionInfo>
-
-                <SectionInfo>
-                    Views:
-                    <SectionStat color={"#2462AF"}>{twitter.followers}</SectionStat>
+                    <SectionStat color={"#2462AF"}>{github.followers}</SectionStat>
                 </SectionInfo>
 
                 <SectionInfo>
                     Stars:
+                    <SectionStat color={"#2462AF"}>{github.stars}⭐</SectionStat>
+                </SectionInfo>
+
+                <SectionInfo>
+                    uhh idk:
                     <SectionStat color={"#2462AF"}>{twitter.followers}</SectionStat>
                 </SectionInfo>
             </SectionBox>
