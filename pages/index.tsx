@@ -18,53 +18,58 @@ export const getStaticProps = async function () {
 const Home: NextPage = ({ twitter, github }: any) => {
     return (
         <Page>
-            <SectionBox>
-                <SectionTitle>TWITTER</SectionTitle>
-                <SectionProfile>
-                    <Avatar src="https://pbs.twimg.com/profile_images/1436751897155850246/32YFXEg6_200x200.jpg" />
-                    <ProfileTitle>
-                        Conrad Crawford <br />
-                        <span style={{ color: "#bbb" }}>(@notcnrad)</span>
-                    </ProfileTitle>
-                </SectionProfile>
-                <SectionInfo>
-                    FOLLOWERS
-                    <SectionStat color={"#2462AF"}>{twitter.followers}</SectionStat>
-                </SectionInfo>
-            </SectionBox>
-
-            <SectionBox>
-                <SectionTitle>GITHUB</SectionTitle>
-                <SectionProfile>
-                    <Avatar src={github.avatar} />
-                    <ProfileTitle>
-                        Conrad Crawford <br />
-                        <span style={{ color: "#bbb" }}>(cnrad)</span>
-                    </ProfileTitle>
-                </SectionProfile>
-                <SectionContent>
+            <Main>
+                <SectionBox>
+                    <SectionTitle>TWITTER</SectionTitle>
+                    <SectionProfile>
+                        <Avatar src="https://pbs.twimg.com/profile_images/1436751897155850246/32YFXEg6_200x200.jpg" />
+                        <ProfileTitle>
+                            Conrad Crawford <br />
+                            <span style={{ color: "#bbb" }}>(@notcnrad)</span>
+                        </ProfileTitle>
+                    </SectionProfile>
                     <SectionInfo>
                         FOLLOWERS
-                        <SectionStat color={"#70a7ff"}>{github.followers}</SectionStat>
+                        <SectionStat color={"#2462AF"}>{twitter.followers}</SectionStat>
                     </SectionInfo>
+                </SectionBox>
 
-                    <SectionInfo>
-                        FOLLOWING
-                        <SectionStat color={"#3234a8"}>{github.following}</SectionStat>
-                    </SectionInfo>
+                <SectionBox>
+                    <SectionTitle>GITHUB</SectionTitle>
+                    <SectionProfile>
+                        <Avatar src={github.avatar} />
+                        <ProfileTitle>
+                            Conrad Crawford <br />
+                            <span style={{ color: "#bbb" }}>(cnrad)</span>
+                        </ProfileTitle>
+                    </SectionProfile>
+                    <SectionContent>
+                        <SectionInfo>
+                            FOLLOWERS
+                            <SectionStat color={"#70a7ff"}>{github.followers}</SectionStat>
+                        </SectionInfo>
 
-                    <SectionInfo>
-                        STARS<SectionStat color={"#e5ff70"}>{github.stars}</SectionStat>
-                    </SectionInfo>
+                        <SectionInfo>
+                            FOLLOWING
+                            <SectionStat color={"#3234a8"}>{github.following}</SectionStat>
+                        </SectionInfo>
 
-                    <SectionInfo>
-                        REPOS
-                        <SectionStat color={"#7eff70"}>{github.repos}</SectionStat>
-                    </SectionInfo>
-                </SectionContent>
-            </SectionBox>
+                        <SectionInfo>
+                            STARS<SectionStat color={"#e5ff70"}>{github.stars}</SectionStat>
+                        </SectionInfo>
 
-            <img src="https://lanyard-profile-readme.vercel.app/api/705665813994012695?hideTimestamp=true&idleMessage=Just%20chillin...&bg=181c2f&borderRadius=10px" />
+                        <SectionInfo>
+                            REPOS
+                            <SectionStat color={"#7eff70"}>{github.repos}</SectionStat>
+                        </SectionInfo>
+                    </SectionContent>
+                </SectionBox>
+
+                <img
+                    style={{ margin: "1rem" }}
+                    src="https://lanyard-profile-readme.vercel.app/api/705665813994012695?hideTimestamp=true&idleMessage=Just%20chillin...&bg=181c2f&borderRadius=10px"
+                />
+            </Main>
         </Page>
     );
 };
@@ -75,6 +80,13 @@ const Page = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+`;
+
+const Main = styled.div`
+    width: auto;
+    height: auto;
+    display: grid;
+    grid-template-columns: 22rem 22rem;
 `;
 
 const SectionBox = styled.div`
