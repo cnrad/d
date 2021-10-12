@@ -65,10 +65,10 @@ const Home: NextPage = ({ twitter, github }: any) => {
                     </SectionContent>
                 </SectionBox>
 
-                <img
-                    style={{ margin: "1rem" }}
-                    src="https://lanyard-profile-readme.vercel.app/api/705665813994012695?hideTimestamp=true&idleMessage=Just%20chillin...&bg=181c2f&borderRadius=10px"
-                />
+                <SectionBox style={{ width: "28.5rem", height: "17rem" }}>
+                    <SectionTitle style={{ margin: 0 }}>DISCORD</SectionTitle>
+                    <img src="https://lanyard-profile-readme.vercel.app/api/705665813994012695?hideTimestamp=true&idleMessage=Just%20chillin...&bg=181c2f&borderRadius=0.35rem" />
+                </SectionBox>
             </Main>
         </Page>
     );
@@ -116,7 +116,7 @@ const SectionProfile = styled.div`
     align-items: center;
     justify-content: start;
     font-size: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 `;
 
 const Avatar = styled.img`
@@ -146,7 +146,7 @@ const SectionInfo = styled.div`
     height: auto;
     width: auto;
     padding-right: 2rem;
-    font-size: 1rem;
+    font-size: 0.9rem;
     letter-spacing: 0.05rem;
     margin: 0;
     display: flex;
