@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/styled-components": "^5.1.14",
+    "axios": "^0.22.0",
     "framer-motion": "^4.1.17",
     "next": "11.1.2",
     "prettier": "^2.4.1",
