@@ -3,11 +3,9 @@ import axios from "axios";
 import Head from "next/head";
 import styled from "styled-components";
 
-const server = process.env.NODE_ENV !== "production" ? "http://localhost:3005" : "https://d.cnrad.dev";
-
 export const getStaticProps = async function () {
-    let twitter = await axios.get(server + "/api/twitter").then(res => res.data);
-    let github = await axios.get(server + "/api/github").then(res => res.data);
+    let twitter = await fetch("http://localhost:3005/api/twitter").then(res => res.json());
+    let github = await fetch("http://localhost:3005/api/github").then(res => res.json());
 
     return {
         props: {
