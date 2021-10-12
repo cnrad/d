@@ -1,24 +1,39 @@
 import type { NextPage } from "next";
-import axios from "axios";
 import Head from "next/head";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import fetchGithub from "../src/fetch/github";
 import fetchTwitter from "../src/fetch/twitter";
 
 export const getStaticProps = async function () {
-    let twitter = JSON.parse(await fetchTwitter());
-    let github = JSON.parse(await fetchGithub());
+    let twitterInfo = JSON.parse(await fetchTwitter());
+    let githubInfo = JSON.parse(await fetchGithub());
 
     return {
         props: {
-            twitter,
-            github,
+            twitterInfo,
+            githubInfo,
         },
     };
 };
 
-const Home: NextPage = ({ twitter, github }: any) => {
+const Home: NextPage = ({ twitterInfo, githubInfo }: any) => {
+    const [twitter, setTwitterInfo] = useState(twitterInfo);
+    const [github, setGithubInfo] = useState(githubInfo);
+
+    useEffect(() => {
+        setInterval(async () => {
+            let newTwitter = await fetch("/api/twitter");
+            let newGithub = await fetch("/api/github");
+
+            console.log("running");
+
+            setTwitterInfo(newTwitter);
+            setGithubInfo(newGithub);
+        }, 60000);
+    }, []);
+
     return (
         <Page>
             <Main>

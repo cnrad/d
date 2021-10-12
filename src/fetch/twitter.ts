@@ -7,7 +7,5 @@ export default async function fetchTwitter() {
         "https://cdn.syndication.twimg.com/widgets/followbutton/info.json?screen_names=notcnrad"
     ).then(res => res.json());
 
-    console.log(twitterInfo[0]);
-
     return JSON.stringify({ followers: twitterInfo[0].followers_count });
 }
