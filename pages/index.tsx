@@ -3,9 +3,12 @@ import axios from "axios";
 import Head from "next/head";
 import styled from "styled-components";
 
+import fetchGithub from "../src/fetch/github";
+import fetchTwitter from "../src/fetch/twitter";
+
 export const getStaticProps = async function () {
-    let twitter = await fetch(process.env.VERCEL_URL + "/api/twitter").then(res => res.json());
-    let github = await fetch(process.env.VERCEL_URL + "/api/github").then(res => res.json());
+    let twitter = JSON.parse(await fetchTwitter());
+    let github = JSON.parse(await fetchGithub());
 
     return {
         props: {

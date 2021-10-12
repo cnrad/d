@@ -1,6 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
-
 type Data = {
     followers: string;
     following: string;
@@ -9,11 +6,11 @@ type Data = {
     avatar: string;
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default async function fetchGithub() {
     const ghInfo = await fetch("https://api.github.com/users/cnrad").then(res => res.json());
     const starCount = await fetch("https://api.github-star-counter.workers.dev/user/cnrad").then(res => res.json());
 
-    res.status(200).json({
+    return JSON.stringify({
         followers: ghInfo.followers,
         following: ghInfo.following,
         stars: starCount.stars,
