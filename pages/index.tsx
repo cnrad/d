@@ -4,8 +4,8 @@ import Head from "next/head";
 import styled from "styled-components";
 
 export const getStaticProps = async function () {
-    let twitter = await fetch("http://localhost:3005/api/twitter").then(res => res.json());
-    let github = await fetch("http://localhost:3005/api/github").then(res => res.json());
+    let twitter = await fetch(process.env.VERCEL_URL + "/api/twitter").then(res => res.json());
+    let github = await fetch(process.env.VERCEL_URL + "/api/github").then(res => res.json());
 
     return {
         props: {
