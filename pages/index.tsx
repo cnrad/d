@@ -21,17 +21,20 @@ export const getStaticProps = async function () {
 const Home: NextPage = ({ twitterInfo, githubInfo }: any) => {
     const [twitter, setTwitterInfo] = useState(twitterInfo);
     const [github, setGithubInfo] = useState(githubInfo);
+    const [updatedTimestamp, setUpdatedTimestamp] = useState(new Date().toLocaleString());
 
     useEffect(() => {
         setInterval(async () => {
             let newTwitter = await fetch("/api/twitter");
             let newGithub = await fetch("/api/github");
 
-            console.log("running");
+            console.log(github);
 
-            setTwitterInfo(newTwitter);
-            setGithubInfo(newGithub);
-        }, 60000);
+            setTwitterInfo(await newTwitter.json());
+            setGithubInfo(await newGithub.json());
+
+            setUpdatedTimestamp(new Date().toLocaleString());
+        }, 10 * 60 * 1000);
     }, []);
 
     return (
@@ -88,6 +91,7 @@ const Home: NextPage = ({ twitterInfo, githubInfo }: any) => {
                     <img src="https://lanyard-profile-readme.vercel.app/api/705665813994012695?hideTimestamp=true&idleMessage=Just%20chillin...&bg=181c2f&borderRadius=0.35rem" />
                 </SectionBox>
             </Main>
+            <LastUpdated>Last Updated on {updatedTimestamp}</LastUpdated>
         </Page>
     );
 };
@@ -96,6 +100,7 @@ const Page = styled.div`
     width: 100%;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 `;
@@ -178,6 +183,16 @@ const SectionStat = styled.div<{ color: string }>`
     font-size: 2rem;
     font-weight: 400;
     filter: drop-shadow(0 0 4px ${({ color }) => color});
+`;
+
+const LastUpdated = styled.div`
+    margin-top: 4rem;
+    letter-spacing: 0.05rem;
+    color: #4c5777;
+    height: auto;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
 `;
 
 export default Home;

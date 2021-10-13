@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const ghInfo = await fetch("https://api.github.com/users/cnrad").then(res => res.json());
     const starCount = await fetch("https://api.github-star-counter.workers.dev/user/cnrad").then(res => res.json());
 
-    return JSON.stringify({
+    return res.status(200).json({
         followers: ghInfo.followers,
         following: ghInfo.following,
         stars: starCount.stars,
