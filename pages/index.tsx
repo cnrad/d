@@ -88,7 +88,10 @@ const Home: NextPage = ({ twitterInfo, githubInfo }: any) => {
 
                 <SectionBox style={{ width: "28.5rem", height: "17rem" }}>
                     <SectionTitle style={{ margin: 0 }}>DISCORD</SectionTitle>
-                    <img src="https://lanyard-profile-readme.vercel.app/api/705665813994012695?hideTimestamp=true&idleMessage=Just%20chillin...&bg=181c2f&borderRadius=0.35rem" />
+                    <img
+                        style={{ width: "100%", height: "100%" }}
+                        src="https://lanyard-profile-readme.vercel.app/api/705665813994012695?hideTimestamp=true&idleMessage=Just%20chillin...&bg=181c2f&borderRadius=0.35rem"
+                    />
                 </SectionBox>
             </Main>
             <LastUpdated>Last Updated on {updatedTimestamp}</LastUpdated>
@@ -110,6 +113,13 @@ const Main = styled.div`
     height: auto;
     display: grid;
     grid-template-columns: 22rem 22rem;
+
+    @media (max-width: 1000px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 `;
 
 const SectionBox = styled.div`
@@ -121,7 +131,7 @@ const SectionBox = styled.div`
     border-radius: 0.35rem;
     filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.1));
     padding: 1.5rem;
-    margin: 1rem;
+    margin: 0.75rem;
 `;
 
 const SectionTitle = styled.h1`
@@ -186,13 +196,12 @@ const SectionStat = styled.div<{ color: string }>`
 `;
 
 const LastUpdated = styled.div`
-    margin-top: 4rem;
     letter-spacing: 0.05rem;
     color: #4c5777;
     height: auto;
     font-size: 0.85rem;
     font-weight: 700;
-    margin: 0 0 1rem 0;
+    padding: 1rem 0;
 `;
 
 export default Home;
