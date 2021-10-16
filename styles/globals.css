@@ -9,6 +9,20 @@ body {
     background: #0b0f24;
 }
 
+@media (max-height: 700px) {
+    html,
+    body {
+        font-size: 16px;
+    }
+}
+
+@media (max-height: 485px) {
+    html,
+    body {
+        font-size: 13px;
+    }
+}
+
 a {
     color: inherit;
     text-decoration: none;
