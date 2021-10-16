@@ -39,6 +39,7 @@ const Home: NextPage = ({ twitterInfo, githubInfo }: any) => {
 
     return (
         <Page>
+            <Header>d.cnrad.dev</Header>
             <Main>
                 <SectionBox>
                     <SectionTitle>TWITTER</SectionTitle>
@@ -108,6 +109,15 @@ const Page = styled.div`
     justify-content: center;
 `;
 
+const Header = styled.h1`
+    font-size: 1.75rem;
+    color: #4f5c95;
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    border-bottom: 2px #4f5c95 solid;
+    padding-bottom: 0.05rem;
+`;
+
 const Main = styled.div`
     width: auto;
     height: auto;
@@ -117,6 +127,13 @@ const Main = styled.div`
     @media (max-width: 1000px) {
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @media (max-height: 700px) {
+        display: flex;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
     }
@@ -141,6 +158,7 @@ const SectionTitle = styled.h1`
     width: 100%;
     font-size: 0.85rem;
     margin: 0 0 1rem 0;
+    text-transform: uppercase;
 `;
 
 const SectionProfile = styled.div`
@@ -186,6 +204,7 @@ const SectionInfo = styled.div`
     flex-direction: column;
     margin-bottom: 1rem;
     font-weight: 600;
+    text-transform: uppercase;
 `;
 
 const SectionStat = styled.div<{ color: string }>`
