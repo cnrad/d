@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
@@ -12,11 +12,11 @@ interface Props {
     githubInfo: any;
 }
 
-export const getStaticProps: GetStaticProps = async ctx => {
-    const params = (ctx.params as Partial<Record<"github" | "twitter", string>>) ?? {};
+export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
+    const query = (ctx.query as Partial<Record<"github" | "twitter", string>>) ?? {};
 
-    const twitterInfo = JSON.parse(await fetchTwitter(params.twitter ? params.twitter : "notcnrad"));
-    const githubInfo = JSON.parse(await fetchGithub(params.github ? params.github : "cnrad"));
+    const twitterInfo = JSON.parse(await fetchTwitter(query.twitter ? query.twitter : "notcnrad"));
+    const githubInfo = JSON.parse(await fetchGithub(query.github ? query.github : "cnrad"));
 
     return {
         props: {
@@ -44,7 +44,7 @@ const Home: NextPage<Props> = ({ twitterInfo, githubInfo }) => {
     const discordID = params.discord !== undefined ? params.discord : "705665813994012695";
 
     useEffect(() => {
-        setInterval(async () => {
+        const interval = setInterval(async () => {
             const newTwitter = await fetch(`/api/twitter?user=${twitterUsername}`);
             const newGithub = await fetch(`/api/github?user=${githubUsername}`);
 
@@ -54,6 +54,10 @@ const Home: NextPage<Props> = ({ twitterInfo, githubInfo }) => {
             setUpdatedTimestamp(new Date().toLocaleString());
             setDc(old => old + 1);
         }, 10 * 60 * 1000);
+
+        return () => {
+            clearInterval(interval);
+        };
     }, [githubUsername, twitterUsername]);
 
     return (
