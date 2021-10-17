@@ -2,13 +2,22 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 import fetchGithub from "../src/fetch/github";
 import fetchTwitter from "../src/fetch/twitter";
 
-export const getStaticProps = async function () {
-    let twitterInfo = JSON.parse(await fetchTwitter());
-    let githubInfo = JSON.parse(await fetchGithub());
+interface Parameters {
+    github?: string;
+    twitter?: string;
+    discord?: string;
+}
+
+export async function getServerSideProps(ctx: any) {
+    let twitterInfo = JSON.parse(await fetchTwitter(ctx.query.twitter !== undefined ? ctx.query.twitter : "notcnrad"));
+    let githubInfo = JSON.parse(await fetchGithub(ctx.query.github !== undefined ? ctx.query.github : "cnrad"));
+
+    console.log(ctx.query);
 
     return {
         props: {
@@ -16,17 +25,25 @@ export const getStaticProps = async function () {
             githubInfo,
         },
     };
-};
+}
 
 const Home: NextPage = ({ twitterInfo, githubInfo }: any) => {
     const [twitter, setTwitterInfo] = useState(twitterInfo);
     const [github, setGithubInfo] = useState(githubInfo);
     const [updatedTimestamp, setUpdatedTimestamp] = useState(new Date().toLocaleString());
+    const [dc, setDc] = useState(0);
+
+    const router = useRouter();
+    let params: Parameters = router.query;
+
+    const twitterUsername = params.twitter !== undefined ? params.twitter : "notcnrad";
+    const githubUsername = params.github !== undefined ? params.github : "notcnrad";
+    const discordID = params.discord !== undefined ? params.discord : "705665813994012695";
 
     useEffect(() => {
         setInterval(async () => {
-            let newTwitter = await fetch("/api/twitter");
-            let newGithub = await fetch("/api/github");
+            let newTwitter = await fetch(`/api/twitter?user=${twitterUsername}`);
+            let newGithub = await fetch(`/api/github?user=${githubUsername}`);
 
             console.log(github);
 
@@ -34,20 +51,20 @@ const Home: NextPage = ({ twitterInfo, githubInfo }: any) => {
             setGithubInfo(await newGithub.json());
 
             setUpdatedTimestamp(new Date().toLocaleString());
+            setDc(dc + 1);
         }, 10 * 60 * 1000);
     }, []);
 
     return (
         <Page>
-            <Header>d.cnrad.dev</Header>
             <Main>
                 <SectionBox>
                     <SectionTitle>TWITTER</SectionTitle>
                     <SectionProfile>
-                        <Avatar src="https://pbs.twimg.com/profile_images/1436751897155850246/32YFXEg6_200x200.jpg" />
+                        <Avatar src={`https://unavatar.io/twitter/${twitterUsername}`} alt="Twitter Profile Picture" />
                         <ProfileTitle>
-                            Conrad Crawford <br />
-                            <span style={{ color: "#bbb" }}>(@notcnrad)</span>
+                            {twitter.name} <br />
+                            <span style={{ color: "#bbb" }}>(@{twitterUsername})</span>
                         </ProfileTitle>
                     </SectionProfile>
                     <SectionInfo>
@@ -59,10 +76,10 @@ const Home: NextPage = ({ twitterInfo, githubInfo }: any) => {
                 <SectionBox>
                     <SectionTitle>GITHUB</SectionTitle>
                     <SectionProfile>
-                        <Avatar src={github.avatar} />
+                        <Avatar src={github.avatar} alt="GitHub Profile Picture" />
                         <ProfileTitle>
-                            Conrad Crawford <br />
-                            <span style={{ color: "#bbb" }}>(cnrad)</span>
+                            {github.name} <br />
+                            <span style={{ color: "#bbb" }}>({githubUsername})</span>
                         </ProfileTitle>
                     </SectionProfile>
                     <SectionContent>
@@ -91,7 +108,7 @@ const Home: NextPage = ({ twitterInfo, githubInfo }: any) => {
                     <SectionTitle style={{ margin: 0 }}>DISCORD</SectionTitle>
                     <img
                         style={{ width: "100%", height: "100%" }}
-                        src="https://lanyard-profile-readme.vercel.app/api/705665813994012695?hideTimestamp=true&idleMessage=Just%20chillin...&bg=181c2f&borderRadius=0.35rem"
+                        src={`https://lanyard-profile-readme.vercel.app/api/${discordID}?hideTimestamp=true&idleMessage=Just%20chillin...&bg=181c2f&borderRadius=0.35rem&v=${dc}`}
                     />
                 </SectionBox>
             </Main>
