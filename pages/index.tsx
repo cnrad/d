@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSidePropsContext, GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
@@ -13,9 +13,13 @@ interface Parameters {
     discord?: string;
 }
 
-export async function getServerSideProps(ctx: any) {
-    let twitterInfo = JSON.parse(await fetchTwitter(ctx.query.twitter !== undefined ? ctx.query.twitter : "notcnrad"));
-    let githubInfo = JSON.parse(await fetchGithub(ctx.query.github !== undefined ? ctx.query.github : "cnrad"));
+export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
+    let twitterInfo = JSON.parse(
+        await fetchTwitter(ctx.query.twitter !== undefined ? (ctx.query.twitter as string) : "notcnrad")
+    );
+    let githubInfo = JSON.parse(
+        await fetchGithub(ctx.query.github !== undefined ? (ctx.query.github as string) : "cnrad")
+    );
 
     console.log(ctx.query);
 
@@ -25,7 +29,7 @@ export async function getServerSideProps(ctx: any) {
             githubInfo,
         },
     };
-}
+};
 
 const Home: NextPage = ({ twitterInfo, githubInfo }: any) => {
     const [twitter, setTwitterInfo] = useState(twitterInfo);
