@@ -5,6 +5,7 @@ type Data = {
     following: string;
     name: string;
     avatar: string;
+    tweets: string;
 };
 
 type Error = {
@@ -26,5 +27,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         following: twitterInfo.friends_count,
         name: twitterInfo.name,
         avatar: twitterInfo.profile_image_url.replace("_normal", ""),
+        tweets: twitterInfo.statuses_count,
     });
 }

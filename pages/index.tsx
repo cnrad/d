@@ -85,6 +85,10 @@ const Home: NextPage<Props> = ({ twitterInfo, githubInfo }) => {
                                 FOLLOWING
                                 <SectionStat color={"#3234a8"}>{twitter.following}</SectionStat>
                             </SectionInfo>
+                            <SectionInfo>
+                                TWEETS
+                                <SectionStat color={"#b78feb"}>{twitter.tweets}</SectionStat>
+                            </SectionInfo>
                         </SectionContent>
                     </SectionBox>
 
@@ -153,10 +157,14 @@ const Header = styled.h1`
 `;
 
 const Main = styled.div`
-    width: auto;
+    width: 50%;
     height: auto;
-    display: grid;
-    grid-template-columns: 22rem 22rem;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 
     @media (max-width: 1000px) {
         display: flex;

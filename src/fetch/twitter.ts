@@ -10,5 +10,6 @@ export default async function fetchTwitter(username: string) {
         following: twitterInfo.friends_count,
         name: twitterInfo.name,
         avatar: twitterInfo.profile_image_url.replace("_normal", ""),
+        tweets: twitterInfo.statuses_count,
     });
 }
