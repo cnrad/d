@@ -7,9 +7,8 @@ import fetchGithub from "../src/fetch/github";
 import fetchTwitter from "../src/fetch/twitter";
 
 interface Props {
-    // TODO(@cnrad): Type these!!
-    twitterInfo: any;
-    githubInfo: any;
+    twitterInfo: Record<string, string>;
+    githubInfo: Record<string, string>;
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
