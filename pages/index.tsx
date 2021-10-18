@@ -2,6 +2,7 @@ import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import fetchGithub from "../src/fetch/github";
 import fetchTwitter from "../src/fetch/twitter";
@@ -43,82 +44,87 @@ const Home: NextPage<Props> = ({ twitterInfo, githubInfo }) => {
     const discordID = params.discord !== undefined ? params.discord : "705665813994012695";
 
     useEffect(() => {
-        const interval = setInterval(async () => {
+        setInterval(async () => {
             const newTwitter = await fetch(`/api/twitter?user=${twitterUsername}`);
             const newGithub = await fetch(`/api/github?user=${githubUsername}`);
 
             setTwitterInfo(await newTwitter.json());
             setGithubInfo(await newGithub.json());
+            console.log(github);
 
             setUpdatedTimestamp(new Date().toLocaleString());
             setDc(old => old + 1);
-        }, 10 * 60 * 1000);
-
-        return () => {
-            clearInterval(interval);
-        };
-    }, [githubUsername, twitterUsername]);
+        }, 30 * 1000);
+    }, []);
 
     return (
-        <Page>
-            <Main>
-                <SectionBox>
-                    <SectionTitle>TWITTER</SectionTitle>
-                    <SectionProfile>
-                        <Avatar src={`https://unavatar.io/twitter/${twitterUsername}`} alt="Twitter Profile Picture" />
-                        <ProfileTitle>
-                            {twitter.name} <br />
-                            <span style={{ color: "#bbb" }}>(@{twitterUsername})</span>
-                        </ProfileTitle>
-                    </SectionProfile>
-                    <SectionInfo>
-                        FOLLOWERS
-                        <SectionStat color={"#2462AF"}>{twitter.followers}</SectionStat>
-                    </SectionInfo>
-                </SectionBox>
-
-                <SectionBox>
-                    <SectionTitle>GITHUB</SectionTitle>
-                    <SectionProfile>
-                        <Avatar src={github.avatar} alt="GitHub Profile Picture" />
-                        <ProfileTitle>
-                            {github.name} <br />
-                            <span style={{ color: "#bbb" }}>({githubUsername})</span>
-                        </ProfileTitle>
-                    </SectionProfile>
-                    <SectionContent>
+        <>
+            <Head>
+                <title>d.cnrad.dev dashboard</title>
+            </Head>
+            <Page>
+                <Main>
+                    <SectionBox>
+                        <SectionTitle>TWITTER</SectionTitle>
+                        <SectionProfile>
+                            <Avatar
+                                src={`https://unavatar.io/twitter/${twitterUsername}`}
+                                alt="Twitter Profile Picture"
+                            />
+                            <ProfileTitle>
+                                {twitter.name} <br />
+                                <span style={{ color: "#bbb" }}>(@{twitterUsername})</span>
+                            </ProfileTitle>
+                        </SectionProfile>
                         <SectionInfo>
                             FOLLOWERS
-                            <SectionStat color={"#70a7ff"}>{github.followers}</SectionStat>
+                            <SectionStat color={"#2462AF"}>{twitter.followers}</SectionStat>
                         </SectionInfo>
+                    </SectionBox>
 
-                        <SectionInfo>
-                            FOLLOWING
-                            <SectionStat color={"#3234a8"}>{github.following}</SectionStat>
-                        </SectionInfo>
+                    <SectionBox>
+                        <SectionTitle>GITHUB</SectionTitle>
+                        <SectionProfile>
+                            <Avatar src={github.avatar} alt="GitHub Profile Picture" />
+                            <ProfileTitle>
+                                {github.name} <br />
+                                <span style={{ color: "#bbb" }}>({githubUsername})</span>
+                            </ProfileTitle>
+                        </SectionProfile>
+                        <SectionContent>
+                            <SectionInfo>
+                                FOLLOWERS
+                                <SectionStat color={"#70a7ff"}>{github.followers}</SectionStat>
+                            </SectionInfo>
 
-                        <SectionInfo>
-                            STARS<SectionStat color={"#e5ff70"}>{github.stars}</SectionStat>
-                        </SectionInfo>
+                            <SectionInfo>
+                                FOLLOWING
+                                <SectionStat color={"#3234a8"}>{github.following}</SectionStat>
+                            </SectionInfo>
 
-                        <SectionInfo>
-                            REPOS
-                            <SectionStat color={"#7eff70"}>{github.repos}</SectionStat>
-                        </SectionInfo>
-                    </SectionContent>
-                </SectionBox>
+                            <SectionInfo>
+                                STARS<SectionStat color={"#e5ff70"}>{github.stars}</SectionStat>
+                            </SectionInfo>
 
-                <SectionBox style={{ width: "28.5rem", height: "17rem" }}>
-                    <SectionTitle style={{ margin: 0 }}>DISCORD</SectionTitle>
-                    <img
-                        style={{ width: "100%", height: "100%" }}
-                        src={`https://lanyard-profile-readme.vercel.app/api/${discordID}?hideTimestamp=true&idleMessage=Just%20chillin...&bg=181c2f&borderRadius=0.35rem&v=${dc}`}
-                        alt="Discord Status"
-                    />
-                </SectionBox>
-            </Main>
-            <LastUpdated>Last Updated on {updatedTimestamp}</LastUpdated>
-        </Page>
+                            <SectionInfo>
+                                REPOS
+                                <SectionStat color={"#7eff70"}>{github.repos}</SectionStat>
+                            </SectionInfo>
+                        </SectionContent>
+                    </SectionBox>
+
+                    <SectionBox style={{ width: "28.5rem", height: "17rem" }}>
+                        <SectionTitle style={{ margin: 0 }}>DISCORD</SectionTitle>
+                        <img
+                            style={{ width: "100%", height: "100%" }}
+                            src={`https://lanyard-profile-readme.vercel.app/api/${discordID}?hideTimestamp=true&idleMessage=Just%20chillin...&bg=181c2f&borderRadius=0.35rem&v=${dc}`}
+                            alt="Discord Status"
+                        />
+                    </SectionBox>
+                </Main>
+                <LastUpdated>Last Updated on {updatedTimestamp}</LastUpdated>
+            </Page>
+        </>
     );
 };
 

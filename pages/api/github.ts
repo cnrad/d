@@ -24,9 +24,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     const ghInfo = await fetch(`https://api.github.com/users/${username}`, {
         headers: {
-            Authentication: `Basic ${base64auth}`,
+            Authorization: `Basic ${base64auth}`,
         },
     }).then(res => res.json());
+
+    console.log(ghInfo);
+
     const starCount = await fetch(`https://api.github-star-counter.workers.dev/user/${username}`).then(res =>
         res.json()
     );
