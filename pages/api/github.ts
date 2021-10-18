@@ -15,7 +15,6 @@ type Error = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data | Error>) {
     const username = req.query["user"];
-    console.log(username);
     if (!username) return res.status(400).json({ error: "No username provided!" });
 
     let data = `${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`;
