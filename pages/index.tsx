@@ -40,7 +40,7 @@ const Home: NextPage<Props> = ({ twitterInfo, githubInfo }) => {
     };
 
     const twitterUsername = params.twitter !== undefined ? params.twitter : "notcnrad";
-    const githubUsername = params.github !== undefined ? params.github : "notcnrad";
+    const githubUsername = params.github !== undefined ? params.github : "cnrad";
     const discordID = params.discord !== undefined ? params.discord : "705665813994012695";
 
     useEffect(() => {

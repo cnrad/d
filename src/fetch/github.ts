@@ -8,6 +8,7 @@ export default async function fetchGithub(username: string) {
             Authorization: `Basic ${base64auth}`,
         },
     }).then(res => res.json());
+
     const starCount = await fetch(`https://api.github-star-counter.workers.dev/user/${username}`).then(res =>
         res.json()
     );
