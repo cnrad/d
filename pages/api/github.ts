@@ -27,9 +27,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             Authorization: `Basic ${base64auth}`,
         },
     }).then(res => res.json());
-
-    console.log(ghInfo);
-
     const starCount = await fetch(`https://api.github-star-counter.workers.dev/user/${username}`).then(res =>
         res.json()
     );

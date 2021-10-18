@@ -50,7 +50,6 @@ const Home: NextPage<Props> = ({ twitterInfo, githubInfo }) => {
 
             setTwitterInfo(await newTwitter.json());
             setGithubInfo(await newGithub.json());
-            console.log(github);
 
             setUpdatedTimestamp(new Date().toLocaleString());
             setDc(old => old + 1);
