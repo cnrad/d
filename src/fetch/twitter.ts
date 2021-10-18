@@ -1,7 +1,14 @@
 export default async function fetchTwitter(username: string) {
-    const twitterInfo = await fetch(
-        `https://cdn.syndication.twimg.com/widgets/followbutton/info.json?screen_names=${username}`
-    ).then(res => res.json());
+    const twitterInfo = await fetch(`https://api.twitter.com/1.1/users/show.json?screen_name=${username}`, {
+        headers: {
+            Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}`,
+        },
+    }).then(res => res.json());
 
-    return JSON.stringify({ followers: twitterInfo[0].followers_count, name: twitterInfo[0].name });
+    return JSON.stringify({
+        followers: twitterInfo.followers_count,
+        following: twitterInfo.friends_count,
+        name: twitterInfo.name,
+        avatar: twitterInfo.profile_image_url,
+    });
 }
