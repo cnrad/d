@@ -44,7 +44,7 @@ const Home: NextPage<Props> = ({ twitterInfo, githubInfo }) => {
     const discordID = params.discord !== undefined ? params.discord : "705665813994012695";
 
     useEffect(() => {
-        setInterval(async () => {
+        const interval = setInterval(async () => {
             const newTwitter = await fetch(`/api/twitter?user=${twitterUsername}`);
             const newGithub = await fetch(`/api/github?user=${githubUsername}`);
 
@@ -53,8 +53,12 @@ const Home: NextPage<Props> = ({ twitterInfo, githubInfo }) => {
 
             setUpdatedTimestamp(new Date().toLocaleString());
             setDc(old => old + 1);
-        }, 30 * 1000);
-    }, []);
+        }, 5 * 60 * 1000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, [githubUsername, twitterUsername]);
 
     return (
         <>
