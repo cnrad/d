@@ -1,5 +1,4 @@
-import type { GetServerSidePropsContext, GetServerSideProps, NextPage } from "next";
-import Head from "next/head";
+import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
@@ -7,21 +6,17 @@ import { useRouter } from "next/router";
 import fetchGithub from "../src/fetch/github";
 import fetchTwitter from "../src/fetch/twitter";
 
-interface Parameters {
-    github?: string;
-    twitter?: string;
-    discord?: string;
+interface Props {
+    // TODO(@cnrad): Type these!!
+    twitterInfo: any;
+    githubInfo: any;
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    let twitterInfo = JSON.parse(
-        await fetchTwitter(ctx.query.twitter !== undefined ? (ctx.query.twitter as string) : "notcnrad")
-    );
-    let githubInfo = JSON.parse(
-        await fetchGithub(ctx.query.github !== undefined ? (ctx.query.github as string) : "cnrad")
-    );
+export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
+    const query = (ctx.query as Partial<Record<"github" | "twitter", string>>) ?? {};
 
-    console.log(ctx.query);
+    const twitterInfo = JSON.parse(await fetchTwitter(query.twitter ? query.twitter : "notcnrad"));
+    const githubInfo = JSON.parse(await fetchGithub(query.github ? query.github : "cnrad"));
 
     return {
         props: {
@@ -31,33 +26,39 @@ export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSideP
     };
 };
 
-const Home: NextPage = ({ twitterInfo, githubInfo }: any) => {
+const Home: NextPage<Props> = ({ twitterInfo, githubInfo }) => {
     const [twitter, setTwitterInfo] = useState(twitterInfo);
     const [github, setGithubInfo] = useState(githubInfo);
     const [updatedTimestamp, setUpdatedTimestamp] = useState(new Date().toLocaleString());
     const [dc, setDc] = useState(0);
 
     const router = useRouter();
-    let params: Parameters = router.query;
+    const params = router.query as {
+        github?: string;
+        twitter?: string;
+        discord?: string;
+    };
 
     const twitterUsername = params.twitter !== undefined ? params.twitter : "notcnrad";
     const githubUsername = params.github !== undefined ? params.github : "notcnrad";
     const discordID = params.discord !== undefined ? params.discord : "705665813994012695";
 
     useEffect(() => {
-        setInterval(async () => {
-            let newTwitter = await fetch(`/api/twitter?user=${twitterUsername}`);
-            let newGithub = await fetch(`/api/github?user=${githubUsername}`);
-
-            console.log(github);
+        const interval = setInterval(async () => {
+            const newTwitter = await fetch(`/api/twitter?user=${twitterUsername}`);
+            const newGithub = await fetch(`/api/github?user=${githubUsername}`);
 
             setTwitterInfo(await newTwitter.json());
             setGithubInfo(await newGithub.json());
 
             setUpdatedTimestamp(new Date().toLocaleString());
-            setDc(dc + 1);
+            setDc(old => old + 1);
         }, 10 * 60 * 1000);
-    }, []);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, [githubUsername, twitterUsername]);
 
     return (
         <Page>
@@ -113,6 +114,7 @@ const Home: NextPage = ({ twitterInfo, githubInfo }: any) => {
                     <img
                         style={{ width: "100%", height: "100%" }}
                         src={`https://lanyard-profile-readme.vercel.app/api/${discordID}?hideTimestamp=true&idleMessage=Just%20chillin...&bg=181c2f&borderRadius=0.35rem&v=${dc}`}
+                        alt="Discord Status"
                     />
                 </SectionBox>
             </Main>
