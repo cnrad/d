@@ -171,13 +171,17 @@ const Main = styled.div`
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        width: 100%;
+        margin-top: 20rem;
     }
 
     @media (max-height: 700px) {
         display: flex;
         flex-direction: row;
+        flex-wrap: nowrap;
         align-items: center;
         justify-content: center;
+        width: auto;
     }
 `;
 
@@ -188,7 +192,7 @@ const SectionBox = styled.div`
     background: #181c2f;
     color: #fff;
     border-radius: 0.35rem;
-    filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.1));
+    filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.4));
     padding: 1.5rem;
     margin: 0.75rem;
 `;
