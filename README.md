@@ -12,5 +12,6 @@ The following query params are accepted:
 - discord (id)
 
 For example, if [Alistair](https://github.com/alii) wanted his own dashboard: https://d.cnrad.dev?twitter=alistaiiiir&github=alii&discord=268798547439255572
+Another example, if [Cody](https://github.com/looskie) wanted his own dashboard: https://d.cnrad.dev?twitter=devlooskie&github=looskie&discord=207204046115831809
 
 If you use this project or just think it's cool, feel free to drop a ⭐, it's very appreciated :)
