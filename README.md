@@ -2,7 +2,7 @@
 
 📊 See real-time statistics of your various social medias
 
-![image](https://user-images.githubusercontent.com/83192247/137652532-9245ac2d-ab0e-4745-9fe6-c4aaf1cf1cfb.png)
+![image](https://user-images.githubusercontent.com/83192247/137825644-2102ca08-a520-4b19-a8a2-9e7313883d8d.png)
 
 ### Usage
 
