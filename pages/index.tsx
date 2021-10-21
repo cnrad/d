@@ -1,11 +1,11 @@
-import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
-import { useState, useEffect } from "react";
-import styled from "styled-components";
-import { useRouter } from "next/router";
-import Head from "next/head";
+import type { GetServerSideProps, NextPage } from "next";
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
-import fetchGithub from "../src/fetch/github";
-import fetchTwitter from "../src/fetch/twitter";
+import fetchGithub from '../src/fetch/github';
+import fetchTwitter from '../src/fetch/twitter';
 
 interface Props {
     twitterInfo: Record<string, string>;
@@ -145,15 +145,6 @@ const Page = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-`;
-
-const Header = styled.h1`
-    font-size: 1.75rem;
-    color: #4f5c95;
-    font-weight: 700;
-    letter-spacing: 0.05rem;
-    border-bottom: 2px #4f5c95 solid;
-    padding-bottom: 0.05rem;
 `;
 
 const Main = styled.div`

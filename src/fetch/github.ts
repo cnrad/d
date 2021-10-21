@@ -14,11 +14,11 @@ export default async function fetchGithub(username: string) {
     );
 
     return JSON.stringify({
-        followers: ghInfo.followers,
-        following: ghInfo.following,
-        stars: starCount.stars,
-        repos: ghInfo.public_repos,
-        avatar: ghInfo.avatar_url,
-        name: ghInfo.name,
+        followers: ghInfo.followers ?? 0,
+        following: ghInfo.following ?? 0,
+        stars: starCount.stars ?? 0,
+        repos: ghInfo.public_repos ?? 0,
+        avatar: ghInfo.avatar_url ?? "https://i.imgur.com/8eYnOFk.png",
+        name: ghInfo.name ?? "Profile Not Found",
     });
 }
