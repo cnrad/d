@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from 'next';
 
 type Data = {
     followers: string;
@@ -23,10 +23,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }).then(res => res.json());
 
     return res.status(200).json({
-        followers: twitterInfo.followers_count,
-        following: twitterInfo.friends_count,
-        name: twitterInfo.name,
-        avatar: twitterInfo.profile_image_url.replace("_normal", ""),
-        tweets: twitterInfo.statuses_count,
+        followers: twitterInfo.followers_count ?? 0,
+        following: twitterInfo.friends_count ?? 0,
+        name: twitterInfo.name ?? "Profile Not Found",
+        avatar: twitterInfo.profile_image_url?.replace("_normal", "") ?? "https://i.imgur.com/8eYnOFk.png",
+        tweets: twitterInfo.statuses_count ?? 0
     });
 }

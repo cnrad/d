@@ -6,10 +6,10 @@ export default async function fetchTwitter(username: string) {
     }).then(res => res.json());
 
     return JSON.stringify({
-        followers: twitterInfo.followers_count,
-        following: twitterInfo.friends_count,
-        name: twitterInfo.name,
-        avatar: twitterInfo.profile_image_url.replace("_normal", ""),
-        tweets: twitterInfo.statuses_count,
+        followers: twitterInfo.followers_count ?? 0,
+        following: twitterInfo.friends_count ?? 0,
+        name: twitterInfo.name ?? "Profile Not Found",
+        avatar: twitterInfo.profile_image_url?.replace("_normal", "") ?? "https://i.imgur.com/8eYnOFk.png",
+        tweets: twitterInfo.statuses_count ?? 0
     });
 }
