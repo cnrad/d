@@ -184,7 +184,7 @@ const SectionBox = styled.div`
     color: #fff;
     border-radius: 0.35rem;
     filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.4));
-    padding: 1.5rem;
+    padding: 1.25rem;
     margin: 0.75rem;
 `;
 
